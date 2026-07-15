@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Wedding Gallery</title>
+  <meta name="description" content="Get lifetime access to the most beautiful wedding events, curated. Pay once, use forever." />
+  <meta name="theme-color" content="#f5f5f7" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@200..800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <style>
+    :root {
+      --color-bg-page: #f5f5f7;
+      --color-bg-card: #ffffff;
+      --color-bg-surface: #f5f5f5;
+      --color-bg-surface-2: #f2f2f2;
+      --color-text-primary: #000000;
+      --color-text-secondary: #707070;
+      --color-text-muted: #adadad;
+      --color-border: #e5e5e5;
+      --color-bg-glass: hsla(0, 0%, 95%, 0.75);
+      --color-success: #1eb14d;
+      --shadow-card: 0px 1px 1.5px rgba(0, 0, 0, 0.03);
+      --shadow-modal: 0 24px 80px rgba(0, 0, 0, 0.18);
+      --font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    [data-theme="dark"] {
+      --color-bg-page: #111111;
+      --color-bg-card: #1c1c1c;
+      --color-bg-surface: #242424;
+      --color-bg-surface-2: #2a2a2a;
+      --color-text-primary: #ffffff;
+      --color-text-secondary: #888888;
+      --color-text-muted: #555555;
+      --color-border: #2a2a2a;
+      --color-bg-glass: rgba(28, 28, 28, 0.85);
+      --shadow-card: 0px 1px 1.5px rgba(0, 0, 0, 0.3);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      background: var(--color-bg-page);
+      min-height: 100vh;
+      transition: background 200ms ease, color 200ms ease;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container {
+      max-width: 1047px;
+      margin: 0 auto;
+      padding: 0 16px;
+      width: 100%;
+    }
+    .page-wrap { padding-top: 86px; min-height: 100vh; display: flex; flex-direction: column; }
+    .main { flex: 1; }
+
+    /* Nav */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; justify-content: center;
+      padding: 24px 16px 16px;
+      pointer-events: none;
+    }
+    .nav__inner {
+      max-width: 580px; height: 64px;
+      background: var(--color-bg-glass);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-radius: 999px;
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      pointer-events: auto;
+      width: 100%;
+      border: 1px solid var(--color-border);
+    }
+    .nav__brand {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.18px;
+      color: var(--color-text-primary);
+      line-height: 1;
+    }
+    .nav__brand span { color: var(--color-text-secondary); }
+    .nav__links { display: flex; align-items: center; gap: 20px; }
+    .nav__link {
+      font-size: 15px; font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color 150ms ease;
+    }
+    .nav__link:hover { color: var(--color-text-primary); }
+    .nav__link--active { color: var(--color-text-primary); }
+
+    /* Hero */
+    .hero {
+      padding: clamp(48px, 6vw, 80px) 0 clamp(56px, 7vw, 100px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(32px, 5.5vw, 64px);
+      font-weight: 700;
+      letter-spacing: -1.28px;
+      line-height: 1.14;
+      color: var(--color-text-primary);
+      max-width: 883px;
+      margin: 0 0 20px;
+      text-align: center;
+    }
+    .hero h1 .line-break { display: block; }
+    .hero p {
+      font-family: var(--font-heading);
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      max-width: 541px;
+      margin: 0;
+      text-align: center;
+    }
+
+    /* Pricing Cards */
+    .pricing-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    @media (min-width: 640px) {
+      .pricing-cards { flex-direction: row; }
+    }
+
+    .plan-card {
+      flex: 1; min-width: 0;
+      border-radius: 15px;
+      border: 1px solid var(--color-border);
+      display: flex; flex-direction: column;
+    }
+    .plan-card__inner {
+      padding: 20px;
+      display: flex; flex-direction: column;
+      gap: 40px;
+      flex: 1;
+    }
+    .plan-card--pro {
+      background: var(--color-bg-card);
+      box-shadow: var(--shadow-card);
+      border-color: transparent;
+    }
+
+    .plan-badge-row {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .plan-badge {
+      background: var(--color-bg-card);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    .plan-card--pro .plan-badge {
+      background: var(--color-bg-surface-2);
+    }
+    .plan-badge-label {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+
+    .plan-price-area {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .plan-price-row {
+      display: flex;
+      gap: 4px;
+      align-items: flex-end;
+    }
+    .plan-price {
+      font-family: var(--font-heading);
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 42px;
+      color: var(--color-text-primary);
+    }
+    .plan-price-label {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+      line-height: 20px;
+    }
+    .plan-desc {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+
+    .plan-features {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .plan-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 1.3;
+    }
+    .plan-feature svg { flex-shrink: 0; }
+
+    .plan-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 12px;
+      border-radius: 1000px;
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: filter 150ms ease, background 150ms ease;
+      border: 1px solid var(--color-border);
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+    .plan-cta:hover { filter: brightness(0.87); }
+    .plan-cta--pro {
+      background: var(--color-text-primary);
+      color: var(--color-bg-page);
+      border: none;
+    }
+    .plan-cta--pro:hover { filter: brightness(0.85); }
+
+    /* Brand Strip */
+    .brand-strip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 40px 0;
+    }
+    .brand-strip__label {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      text-align: center;
+    }
+    .brand-strip__logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(16px, 3vw, 32px);
+      flex-wrap: wrap;
+    }
+    .brand-strip__logo {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .brand-strip__logo img {
+      max-height: 100%;
+      max-width: 120px;
+      object-fit: contain;
+      opacity: 0.35;
+      filter: brightness(0);
+      transition: opacity 200ms ease;
+    }
+    [data-theme="dark"] .brand-strip__logo img { filter: brightness(0.45); }
+    .brand-strip__logo span {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 16px;
+      opacity: 0.25;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+    }
+
+    /* Compare Table */
+    .compare-section { padding: 0 0 40px; }
+    .compare-section h2 {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0 0 24px;
+    }
+    .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .compare-table {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      min-width: 560px;
+    }
+
+    .compare-cell {
+      padding: 12px;
+      border-top: 1px solid var(--color-border);
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+    }
+    .compare-cell--label {
+      padding: 12px 16px 12px 0;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      line-height: 20px;
+    }
+    .compare-cell--center {
+      justify-content: center;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    .compare-cell--pro {
+      background: var(--color-bg-card);
+      border-left: 1px solid var(--color-border);
+      border-right: 1px solid var(--color-border);
+    }
+
+    .compare-header {
+      border-top: none;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 0 12px 24px;
+      align-self: end;
+      min-height: 0;
+    }
+    .compare-header--label {
+      padding: 0 16px 24px 0;
+    }
+    .compare-header--label h2 {
+      margin: 0;
+      line-height: 1.3;
+    }
+    .compare-header__name {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      line-height: 1;
+    }
+    .compare-header__price {
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      line-height: 1;
+    }
+    .compare-header__btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      border-radius: 1000px;
+      font-family: var(--font-heading);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter 150ms ease;
+      white-space: nowrap;
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-primary);
+    }
+    .compare-header__btn:hover { filter: brightness(0.85); }
+    .compare-header__btn--pro {
+      background: var(--color-text-primary);
+      color: var(--color-bg-page);
+      border: none;
+    }
+    .compare-header--pro {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-bottom: none;
+      border-radius: 15px 15px 0 0;
+      padding: 16px 12px 24px;
+    }
+    .compare-row-pro-first .compare-cell--pro {
+      border-top: none;
+    }
+    .compare-row-pro-last .compare-cell--pro {
+      border-radius: 0 0 15px 15px;
+    }
+
+    .compare-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .compare-icon--check { color: var(--color-text-primary); }
+    .compare-icon--x { color: var(--color-text-muted); }
+
+    /* FAQ */
+    .faq-section { padding: 0 0 60px; }
+    .faq-section h2 {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin: 0 0 24px;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+    .faq-item {
+      background: var(--color-bg-card);
+      border-radius: 15px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: background 150ms ease;
+    }
+    .faq-question {
+      width: 100%;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      line-height: 21px;
+    }
+    .faq-chevron {
+      flex-shrink: 0;
+      transition: transform 200ms ease;
+      color: var(--color-text-primary);
+    }
+    .faq-item.is-open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer {
+      padding: 0 20px 20px;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      line-height: 1.55;
+      display: none;
+    }
+    .faq-item.is-open .faq-answer { display: block; }
+
+    /* Footer */
+    .footer {
+      padding: 80px 0 40px;
+    }
+    .footer__inner {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      justify-content: space-between;
+    }
+    @media (min-width: 768px) {
+      .footer__inner { flex-direction: row; }
+    }
+    .footer__brand { max-width: 320px; }
+    .footer__tagline {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--color-text-primary);
+      margin-bottom: 12px;
+    }
+    .footer__desc {
+      font-family: var(--font-heading);
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .footer__links {
+      display: flex;
+      gap: 64px;
+      flex-shrink: 0;
+    }
+    .footer__col { display: flex; flex-direction: column; gap: 10px; }
+    .footer__col-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+    .footer__col a,
+    .footer__col span {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color 150ms ease;
+    }
+    .footer__col a:hover { color: var(--color-text-primary); }
+    .footer__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 60px;
+      padding-top: 0;
+    }
+    .footer__bottom p {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+    }
+    .footer__bottom a {
+      font-family: var(--font-heading);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color 150ms ease;
+    }
+    .footer__bottom a:hover { color: var(--color-text-primary); }
+
+    /* Theme toggle */
+    .theme-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-glass);
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--color-bg-surface);
+      color: var(--color-text-primary);
+    }
+
+    /* Entry animation */
+    .fade-up {
+      opacity: 0;
+      filter: blur(6px);
+      transform: translateY(30px);
+      transition: opacity 600ms ease, filter 600ms ease, transform 600ms ease;
+    }
+    .fade-up.is-visible {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+    .fade-up--sub {
+      filter: blur(4px);
+      transform: translateY(30px);
+    }
+  </style>
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+  <div class="page-wrap">
+    <!-- Nav -->
+    <nav class="nav">
+      <div class="nav__inner">
+        <a href="/" class="nav__brand">Wedding<span>.Gallery</span></a>
+        <div class="nav__links">
+          <a href="/" class="nav__link">Home</a>
+          <a href="/pricing.html" class="nav__link nav__link--active">Pricing</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main">
+      <!-- Hero -->
+      <div class="container">
+        <div class="hero">
+          <h1 class="fade-up" id="hero-title">One payment<br class="line-break"/>Every beautiful event forever</h1>
+          <p class="fade-up fade-up--sub" id="hero-sub">The reference library for real-world wedding design. Pay once, use forever.</p>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="pricing-cards">
+          <!-- Free Plan -->
+          <div class="plan-card">
+            <div class="plan-card__inner">
+              <div class="plan-badge-row">
+                <div class="plan-badge">Free</div>
+                <span class="plan-badge-label">Current</span>
+              </div>
+              <div class="plan-price-area">
+                <div class="plan-price-row">
+                  <span class="plan-price">$0</span>
+                  <span class="plan-price-label">free forever</span>
+                </div>
+                <p class="plan-desc">Get a taste of the gallery. You'll hit the ceiling fast.</p>
+              </div>
+              <div class="plan-features">
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M208,96H48a20,20,0,0,0-20,20v84a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V116A20,20,0,0,0,208,96Zm-4,100H52V120H204ZM44,68A12,12,0,0,1,56,56H200a12,12,0,0,1,0,24H56A12,12,0,0,1,44,68ZM60,28A12,12,0,0,1,72,16H184a12,12,0,0,1,0,24H72A12,12,0,0,1,60,28Z"/></svg>
+                  Browse all curated events, in full
+                </div>
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M184,28H72A20,20,0,0,0,52,48V224a12,12,0,0,0,18.36,10.18l57.63-36,57.65,36A12,12,0,0,0,204,224V48A20,20,0,0,0,184,28Zm-4,174.35-45.65-28.53a12,12,0,0,0-12.72,0L76,202.35V52H180Z"/></svg>
+                  Save up to 10 events · 1 collection
+                </div>
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M47.51,112.49a12,12,0,0,1,17-17L116,147V32a12,12,0,0,1,24,0V147l51.51-51.52a12,12,0,0,1,17,17l-72,72a12,12,0,0,1-17,0ZM216,204H40a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Z"/></svg>
+                  1 Event download monthly
+                </div>
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M232.49,215.51,185,168a92.12,92.12,0,1,0-17,17l47.53,47.54a12,12,0,0,0,17-17ZM44,112a68,68,0,1,1,68,68A68.07,68.07,0,0,1,44,112Z"/></svg>
+                  Smart search
+                </div>
+              </div>
+              <button class="plan-cta" onclick="window.location.href='/'">Start free</button>
+            </div>
+          </div>
+
+          <!-- Pro Plan -->
+          <div class="plan-card plan-card--pro">
+            <div class="plan-card__inner">
+              <div class="plan-badge-row">
+                <div class="plan-badge">Pro</div>
+                <span class="plan-badge-label">Lifetime</span>
+              </div>
+              <div class="plan-price-area">
+                <div class="plan-price-row">
+                  <span class="plan-price">$19.99</span>
+                  <span class="plan-price-label">once</span>
+                </div>
+                <p class="plan-desc">Pay once, yours forever. No subscription.</p>
+              </div>
+              <div class="plan-features">
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M243,96a20.33,20.33,0,0,0-17.74-14l-56.59-4.57L146.83,24.62a20.36,20.36,0,0,0-37.66,0L87.35,77.44,30.76,82A20.45,20.45,0,0,0,19.1,117.88l43.18,37.24-13.2,55.7A20.37,20.37,0,0,0,79.57,233L128,203.19,176.43,233a20.39,20.39,0,0,0,30.49-22.15l-13.2-55.7,43.18-37.24A20.43,20.43,0,0,0,243,96ZM172.53,141.7a12,12,0,0,0-3.84,11.86L181.58,208l-47.29-29.08a12,12,0,0,0-12.58,0L74.42,208l12.89-54.4a12,12,0,0,0-3.84-11.86L41.2,105.24l55.4-4.47a12,12,0,0,0,10.13-7.38L128,41.89l21.27,51.5a12,12,0,0,0,10.13,7.38l55.4,4.47Z"/></svg>
+                  Everything, forever
+                </div>
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M184,28H72A20,20,0,0,0,52,48V224a12,12,0,0,0,18.36,10.18l57.63-36,57.65,36A12,12,0,0,0,204,224V48A20,20,0,0,0,184,28Zm-4,174.35-45.65-28.53a12,12,0,0,0-12.72,0L76,202.35V52H180Z"/></svg>
+                  Unlimited saves & collections
+                </div>
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M47.51,112.49a12,12,0,0,1,17-17L116,147V32a12,12,0,0,1,24,0V147l51.51-51.52a12,12,0,0,1,17,17l-72,72a12,12,0,0,1-17,0ZM216,204H40a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Z"/></svg>
+                  Unlimited downloads, full resolution
+                </div>
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M228.75,100.05c-3.52-3.67-7.15-7.46-8.34-10.33-1.06-2.56-1.14-7.83-1.21-12.47-.15-10-.34-22.44-9.18-31.27s-21.27-9-31.27-9.18c-4.64-.07-9.91-.15-12.47-1.21-2.87-1.19-6.66-4.82-10.33-8.34C148.87,20.46,140.05,12,128,12s-20.87,8.46-27.95,15.25c-3.67,3.52-7.46,7.15-10.33,8.34-2.56,1.06-7.83,1.14-12.47,1.21C67.25,37,54.81,37.14,46,46S37,67.25,36.8,77.25c-.07,4.64-.15,9.91-1.21,12.47-1.19,2.87-4.82,6.66-8.34,10.33C20.46,107.13,12,116,12,128S20.46,148.87,27.25,156c3.52,3.67,7.15,7.46,8.34,10.33,1.06,2.56,1.14,7.83,1.21,12.47.15,10,.34,22.44,9.18,31.27s21.27,9,31.27,9.18c4.64.07,9.91.15,12.47,1.21,2.87,1.19,6.66,4.82,10.33,8.34C107.13,235.54,116,244,128,244s20.87-8.46,27.95-15.25c3.67-3.52,7.46-7.15,10.33-8.34,2.56-1.06,7.83-1.14,12.47-1.21,10-.15,22.44-.34,31.27-9.18s9-21.27,9.18-31.27c.07-4.64.15-9.91,1.21-12.47,1.19-2.87,4.82-6.66,8.34-10.33C235.54,148.87,244,140.05,244,128S235.54,107.13,228.75,100.05Z"/></svg>
+                  Every future event & feature included
+                </div>
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M227.85,46.89a20,20,0,0,0-18.74-18.74c-13.13-.77-46.65.42-74.48,28.24L131,60H74.36a19.83,19.83,0,0,0-14.14,5.86L25.87,100.19a20,20,0,0,0,11.35,33.95l37.14,5.18,42.32,42.32,5.19,37.18A19.88,19.88,0,0,0,135.34,235a20.13,20.13,0,0,0,6.37,1,19.9,19.9,0,0,0,14.1-5.87l34.34-34.35A19.85,19.85,0,0,0,196,181.64V125l3.6-3.59C227.43,93.54,228.62,60,227.85,46.89Z"/></svg>
+                  Support Wedding Gallery
+                </div>
+                <div class="plan-feature">
+                  <svg width="20" height="20" fill="var(--color-text-primary)" viewBox="0 0 256 256"><path d="M224,44H32A20,20,0,0,0,12,64V192a20,20,0,0,0,20,20H224a20,20,0,0,0,20-20V64A20,20,0,0,0,224,44Zm-4,24V88H36V68ZM36,188V112H220v76Zm172-24a12,12,0,0,1-12,12H164a12,12,0,0,1,0-24h32A12,12,0,0,1,208,164Zm-68,0a12,12,0,0,1-12,12H116a12,12,0,0,1,0-24h12A12,12,0,0,1,140,164Z"/></svg>
+                  One-time payment
+                </div>
+              </div>
+              <button class="plan-cta plan-cta--pro" onclick="window.location.href='/'">Get Pro · $19.99 lifetime</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brand Strip -->
+        <div class="brand-strip">
+          <span class="brand-strip__label">+60 Slides from the world's best weddings</span>
+          <div class="brand-strip__logos">
+            <div class="brand-strip__logo"><span>Garden</span></div>
+            <div class="brand-strip__logo"><span>Ballroom</span></div>
+            <div class="brand-strip__logo"><span>Beach</span></div>
+            <div class="brand-strip__logo"><span>Vineyard</span></div>
+            <div class="brand-strip__logo"><span>Rooftop</span></div>
+          </div>
+        </div>
+
+        <!-- Compare Table -->
+        <div class="compare-section">
+          <div class="compare-wrap">
+            <div class="compare-table">
+              <!-- Header row -->
+              <div class="compare-cell compare-header compare-header--label">
+                <h2>Compare plans<br/>& features</h2>
+              </div>
+              <div class="compare-cell compare-header">
+                <span class="compare-header__name">Free</span>
+                <span class="compare-header__price">$0 forever</span>
+                <button class="compare-header__btn" onclick="window.location.href='/'">Start free</button>
+              </div>
+              <div class="compare-cell compare-header compare-header--pro">
+                <span class="compare-header__name">Pro</span>
+                <span class="compare-header__price">$19.99 once</span>
+                <button class="compare-header__btn compare-header__btn--pro" onclick="window.location.href='/'">Get Pro · One payment</button>
+              </div>
+
+              <!-- Row: Saved events -->
+              <div class="compare-cell compare-cell--label">Saved events</div>
+              <div class="compare-cell compare-cell--center">10</div>
+              <div class="compare-cell compare-cell--center compare-cell--pro">Unlimited</div>
+
+              <!-- Row: Collections -->
+              <div class="compare-cell compare-cell--label">Collections</div>
+              <div class="compare-cell compare-cell--center">1</div>
+              <div class="compare-cell compare-cell--center compare-cell--pro">Unlimited</div>
+
+              <!-- Row: Event downloads / month -->
+              <div class="compare-cell compare-cell--label">Event downloads / month</div>
+              <div class="compare-cell compare-cell--center">1</div>
+              <div class="compare-cell compare-cell--center compare-cell--pro">Unlimited</div>
+
+              <!-- Row: Slide exports / month -->
+              <div class="compare-cell compare-cell--label">Slide exports / month (copy & download)</div>
+              <div class="compare-cell compare-cell--center">3</div>
+              <div class="compare-cell compare-cell--center compare-cell--pro">Unlimited</div>
+
+              <!-- Row: Access to all events & slides -->
+              <div class="compare-cell compare-cell--label">Access to all events & slides</div>
+              <div class="compare-cell compare-cell--center">
+                <svg class="compare-icon compare-icon--check" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>
+              </div>
+              <div class="compare-cell compare-cell--center compare-cell--pro">
+                <svg class="compare-icon compare-icon--check" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>
+              </div>
+
+              <!-- Row: Smart search -->
+              <div class="compare-cell compare-cell--label">Smart search</div>
+              <div class="compare-cell compare-cell--center">
+                <svg class="compare-icon compare-icon--check" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>
+              </div>
+              <div class="compare-cell compare-cell--center compare-cell--pro">
+                <svg class="compare-icon compare-icon--check" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>
+              </div>
+
+              <!-- Row: Priority access to new features -->
+              <div class="compare-cell compare-cell--label">Priority access to new features</div>
+              <div class="compare-cell compare-cell--center">
+                <svg class="compare-icon compare-icon--x" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z"/></svg>
+              </div>
+              <div class="compare-cell compare-cell--center compare-cell--pro">
+                <svg class="compare-icon compare-icon--check" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>
+              </div>
+
+              <!-- Row: Every future event & feature -->
+              <div class="compare-cell compare-cell--label">Every future event & feature</div>
+              <div class="compare-cell compare-cell--center">
+                <svg class="compare-icon compare-icon--x" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z"/></svg>
+              </div>
+              <div class="compare-cell compare-cell--center compare-cell--pro compare-row-pro-last">
+                <svg class="compare-icon compare-icon--check" width="20" height="20" fill="currentColor" viewBox="0 0 256 256"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section">
+          <h2>Frequently asked questions</h2>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')">
+                What is Wedding Gallery?
+                <svg class="faq-chevron" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"/></svg>
+              </button>
+              <div class="faq-answer">Wedding Gallery is a curated collection of beautifully designed wedding events — from intimate garden ceremonies to luxury destination weddings. Browse real-world inspiration, save your favorites, and download event details to help plan your perfect day.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')">
+                What does the Pro plan include?
+                <svg class="faq-chevron" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"/></svg>
+              </button>
+              <div class="faq-answer">Pro unlocks everything — unlimited saves, unlimited collections, unlimited event downloads, and every future event and feature as they're added. It's the full Wedding Gallery experience, with no restrictions, forever.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')">
+                Is this really a one-time payment?
+                <svg class="faq-chevron" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"/></svg>
+              </button>
+              <div class="faq-answer">Yes. Pay $19.99 once and you're a Pro member for life. No subscriptions, no recurring charges, no surprises. Your price never changes.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')">
+                What payment methods are accepted?
+                <svg class="faq-chevron" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"/></svg>
+              </button>
+              <div class="faq-answer">We accept all major credit and debit cards (Visa, Mastercard, American Express) and PayPal. All payments are processed securely.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')">
+                Is the price going up?
+                <svg class="faq-chevron" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"/></svg>
+              </button>
+              <div class="faq-answer">The lifetime Pro price may increase in the future as we add more events and features. Lock in at $19.99 now to get the best deal. Once you're in, your price never changes.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')">
+                What if I want a refund?
+                <svg class="faq-chevron" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M216.49,104.49l-80,80a12,12,0,0,1-17,0l-80-80a12,12,0,0,1,17-17L128,159l71.51-71.52a12,12,0,0,1,17,17Z"/></svg>
+              </button>
+              <div class="faq-answer">We offer a full 30-day money-back guarantee. If Wedding Gallery isn't right for you, just email us and we'll refund your payment — no questions asked.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer__inner">
+            <div class="footer__brand">
+              <p class="footer__tagline">Find the event you need to plan yours.</p>
+              <p class="footer__desc">The reference library for real-world wedding design.</p>
+            </div>
+            <div class="footer__links">
+              <div class="footer__col">
+                <p class="footer__col-title">Categories</p>
+                <a href="/?category=ceremony">Ceremony</a>
+                <a href="/?category=reception">Reception</a>
+                <a href="/?category=honeymoon">Honeymoon</a>
+                <a href="/?category=engagement">Engagement</a>
+              </div>
+              <div class="footer__col">
+                <p class="footer__col-title">Wedding Gallery</p>
+                <a href="/">Home</a>
+                <a href="/pricing.html">Pricing</a>
+                <span>Privacy Policy</span>
+              </div>
+            </div>
+          </div>
+          <div class="footer__bottom">
+            <p>All rights reserved &copy; 2026 Wedding Gallery.</p>
+            <a href="https://www.linkedin.com/in/sergigiles/" target="_blank" rel="noopener noreferrer">Made by @sergigiles</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Theme toggle
+      var btn = document.querySelector('.theme-toggle-btn');
+      if (btn) {
+        btn.addEventListener('click', function() {
+          var current = document.documentElement.getAttribute('data-theme');
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+
+      // Entry animation
+      function animateIn() {
+        var els = document.querySelectorAll('.fade-up');
+        els.forEach(function(el, i) {
+          setTimeout(function() {
+            el.classList.add('is-visible');
+          }, i * 120);
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', animateIn);
+      } else {
+        animateIn();
+      }
+    })();
+  </script>
+</body>
+</html>

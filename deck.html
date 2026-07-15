@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deck — Wedding Gallery</title>
+  <meta name="description" content="Explore wedding event slides." />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="format-detection" content="telephone=no" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@200..800&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <script>
+    (function() {
+      var theme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <script type="module" crossorigin src="/assets/deck-Bri3WVeP.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/data-DsCbcjcZ.js">
+  <link rel="stylesheet" crossorigin href="/assets/data-BzeBe2jE.css">
+</head>
+<body>
+  <div class="deck-detail">
+    <header class="deck-detail__header">
+      <a href="/" class="deck-detail__back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Gallery</span>
+      </a>
+      <button type="button" class="soft-pill theme-toggle" data-theme-toggle aria-label="Toggle theme">
+        <svg class="theme-toggle__icon theme-toggle__icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="theme-toggle__icon theme-toggle__icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </header>
+
+    <section class="deck-detail__info">
+      <span class="deck-detail__pill" data-deck-category></span>
+      <h1 class="deck-detail__name" data-deck-name></h1>
+      <p class="deck-detail__meta" data-deck-count></p>
+      <p class="deck-detail__description" data-deck-description></p>
+    </section>
+
+    <div data-deck-hero></div>
+
+    <section class="deck-detail__grid" data-deck-slides></section>
+  </div>
+
+  <dialog class="slide-modal" data-slide-modal aria-label="Slide viewer">
+    <header class="slide-modal__header">
+      <p class="slide-modal__title" data-slide-modal-title></p>
+      <p class="slide-modal__counter">
+        <span data-slide-modal-number>1</span>
+        <span class="slide-modal__counter-total" data-slide-modal-total></span>
+      </p>
+      <button type="button" class="slide-modal__close" data-slide-modal-close aria-label="Close">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" width="20" height="20">
+          <path d="M6 6L18 18"></path><path d="M18 6L6 18"></path>
+        </svg>
+      </button>
+    </header>
+    <div class="slide-modal__stage" data-slide-modal-image>
+      <div class="slide-modal__slide-bg" data-slide-bg></div>
+      <button type="button" class="slide-modal__nav slide-modal__nav--prev" data-slide-modal-prev aria-label="Previous">
+        <span class="glass-button" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" width="20" height="20" style="transform:scaleX(-1)">
+            <path d="M14 5.75L20.25 12L14 18.25"></path><path d="M19.5 12H3.75"></path>
+          </svg>
+        </span>
+      </button>
+      <button type="button" class="slide-modal__nav slide-modal__nav--next" data-slide-modal-next aria-label="Next">
+        <span class="glass-button" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" width="20" height="20">
+            <path d="M14 5.75L20.25 12L14 18.25"></path><path d="M19.5 12H3.75"></path>
+          </svg>
+        </span>
+      </button>
+    </div>
+    <p class="slide-modal__description" data-slide-modal-description hidden></p>
+  </dialog>
+</body>
+</html>
